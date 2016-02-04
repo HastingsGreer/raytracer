@@ -17,7 +17,7 @@ float Plane::intersect(Ray other){
     float distFromPlane = norm.dot(other.start.sub(point));
     float effectiveness = norm.dot(other.dir);
     float t = -distFromPlane / effectiveness;
-    if(t > 0){
+    if(t > 0.001){
     	return t;
     }
     return -1;

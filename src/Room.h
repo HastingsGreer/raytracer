@@ -9,6 +9,7 @@
 #define ROOM_H_
 
 #include <vector>
+#include <string>
 #include "Light.h"
 #include "Camera.h"
 #include "Renderable.h"
@@ -24,15 +25,17 @@ struct intersectionResult{
 
 class Room {
 public:
+	bool do_antialias;
     std::vector<Light> lights;
     std::vector<Renderable*> primitives;
     Camera* camera;
-	Room(Camera* c);
+	Room(Camera* c, bool do_antialias);
 	void addPrimitive(Renderable* r);
 	void addLight(Light l);
-	void render();
+	void render(std::string filename);
 	virtual ~Room();
 	intersectionResult intersect(Ray r);
+	Color trace(Ray r);
 };
 
 
