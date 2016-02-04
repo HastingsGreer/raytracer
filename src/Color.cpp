@@ -8,6 +8,8 @@
 #include <cmath>
 #include <sstream>
 
+
+
 Color::Color(float r, float g, float b):
     r(r), g(g), b(b){
 }
@@ -26,6 +28,9 @@ Color Color::filt(Color other){
 	return Color(this->r * other.r, this->g * other.g, this->b * other.b);
 }
 
+bool Color::equals(Color other){
+    return r == other.r && g == other.g && b == other.b;
+}
 Color Color::mul(float k){
 	return Color(this->r * k, this->g * k, this->b * k);
 }
@@ -40,3 +45,7 @@ std::string Color::repr(){
 
 }
 
+
+
+Color Color::Black ={0, 0, 0};
+Color Color::White ={1, 1, 1};

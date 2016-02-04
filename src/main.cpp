@@ -20,21 +20,29 @@
 #include "Canvas.h"
 #include "Room.h"
 #include <sstream>
-
+#include "Matrix3.h"
 
 
 
 int main(){
-
-	Vector3 cameraPosition {0, 1, 0.};
+	Color White {1,1,1};
+	Color Black {0,0,0};
+    float dirhorizangle = 0;
+    float dirvertangle = -.2;
+	Vector3 cameraPosition {1, 1, 0.};
 	Vector3 u {1., 0., 0.};
 	Vector3 v {0., 1., 0.};
 	Vector3 w {0., 0., 1.};
 
+	Matrix3 camDirMat = horizMat(dirhorizangle).mult(vertMat(dirvertangle));
+
+	u = camDirMat.trans(u);
+	v = camDirMat.trans(v);
+	w = camDirMat.trans(w);
+
+
 	int n = 512;
 
-	Color White {1,1,1};
-	Color Black {0,0,0};
 
 
     Room room { new Camera(cameraPosition, u, v, w, .2, .2, .1, n, n), false};
@@ -45,25 +53,28 @@ int main(){
                              White,
                              Black,
     						 0}));
-    room.addPrimitive(new Sphere({-4, 0, -7}, 1,
-   		     PhongProfile{Color {0.2,0, 0},
-                         {1,0,0},
+    Sphere* left = new Sphere({-4, 0, -7}, 1,
+       		     PhongProfile{Color {0,0, 0},
+                             {0,0,0},
+                             White,
+    						 32});
+   Sphere* right = new Sphere({4, 0, -7}, 1,
+    		PhongProfile{Color {0, 0, 0.2},
+                         Color {0, 0, 1},
                          Black,
-						 0}));
+						 0});
+    room.addPrimitive(left);
+    room.addPrimitive(right);
     room.addPrimitive(new Sphere({0, 0, -7}, 2,
         		 PhongProfile{Color {0, .2, 0},
                               Color {0, .5, 0},
                               Color {.5, .5, .5},
     						  32}));
-    room.addPrimitive(new Sphere({4, 0, -7}, 1,
-    		PhongProfile{Color {0, 0, 0.2},
-                         Color {0, 0, 1},
-                         Black,
-						 0}));
+
 
     Plane* movePlane = new Plane({-6, 0, 0}, {1, 0, 0},
     		PhongProfile{Color {.2, .2, .2},
-                         Color {1, 1, 1},
+                         Black,
                          Color {1, 1, 1}, 32});
     //room.addPrimitive(movePlane);
     //for(float x = -4; x < 4; x += 2){
@@ -71,21 +82,34 @@ int main(){
 
     //}
     std::cout << "starting" << std::endl;
-    room.render("hello.ppm");
+    Vector3 arm = {4, 0, 0};
+    Vector3 disp = {0, 0, -7};
+    Matrix3 rot = horizMat(.02);
+    n = 0;
+    while(true){
+        arm = rot.trans(arm);
+        left->center = disp.sub(arm);
+        right->center = disp.add(arm);
+
+        std::ostringstream file;
+        file << "spin/" << n;
+        room.render(file.str());
+        n++;
+    }
     std::cout << "done" << std::endl;
 
-    n = 0;
-    for(float x = -4; x < 4; x += .03){
 
-    	std::ostringstream file;
-    	file << "video/" << n;
-    	n++;
-    	room.camera->position = {x, 1, 0};
-    	room.render(file.str());
-    	std::cout << x << std::endl;
-
-
-    }
+//    for(float x = -4; x < 4; x += .03){
+//
+//
+//    	file << "video/" << n;
+//    	n++;
+//    	room.camera->position = {x, 1, 0};
+//    	room.render(file.str());
+//    	std::cout << x << std::endl;
+//
+//
+//    }
 
 
 

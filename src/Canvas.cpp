@@ -39,12 +39,23 @@ void Canvas::writeBPM(std::string filename){
 	myfile << "#cool image\n";
     myfile << h << " " << v << "\n";
     myfile << "255\n";
+
+    float max = 0;
+    for(int i = v-1; i >= 0; i--){
+            for(int j = 0; j < h; j++){
+            	Color* c = & pixels[j + h * i];
+            	max = c->r > max ? c->r: max;
+            	max = c->g > max ? c->g: max;
+            	max = c->b > max ? c->b: max;
+
+            }
+    }
     for(int i = v-1; i >= 0; i--){
         for(int j = 0; j < h; j++){
     	    Color* c = & pixels[j + h * i];
-    	    myfile << ((int) (std::pow(c->r, 1/2.2) * 255)) << " "
-    	    	   << ((int) (std::pow(c->g, 1/2.2) * 255)) << " "
-    	           << ((int) (std::pow(c->b, 1/2.2) * 256)) << " ";
+    	    myfile << ((int) (std::pow((c->r / max), 1/2.2) * 255)) << " "
+    	    	   << ((int) (std::pow((c->g / max), 1/2.2) * 255)) << " "
+    	           << ((int) (std::pow((c->b / max), 1/2.2) * 256)) << " ";
         }
         myfile << std::endl;
     }

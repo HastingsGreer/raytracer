@@ -20,8 +20,14 @@ public:
 	Color add(Color other);
 	Color mul(float k);
 	Color filt(Color other);
+	bool equals(Color other);
     std::string repr();
+
+    static Color Black;
+    static Color White;
 };
+
+
 
 
 

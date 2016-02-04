@@ -24,10 +24,10 @@ float Sphere::intersect(Ray other){
     if(discriminant < 0){
     	return -1;
     }
-    if(-d.dot(p) - std::sqrt(discriminant) > 0){
+    if(-d.dot(p) - std::sqrt(discriminant) > 0.001){
     	return (-d.dot(p) - std::sqrt(discriminant) )/ d.dot(d);
     }
-    if(-d.dot(p) + std::sqrt(discriminant) > 0){
+    if(-d.dot(p) + std::sqrt(discriminant) > 0.001){
         	return (-d.dot(p) + std::sqrt(discriminant) )/ d.dot(d);
         }
     return -1;
