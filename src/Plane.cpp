@@ -7,24 +7,24 @@
 
 #include "Plane.h"
 
-Plane::Plane(Vector3 point, Vector3 normal, Color c):
-    point(point), c(c) {
-	this->normal = normal.unit();
+Plane::Plane(Vector3 point, Vector3 norm, PhongProfile prof): Renderable(prof),
+    point(point){
+	this->norm = norm.unit();
 	// TODO Auto-generated constructor stub
 
 }
 float Plane::intersect(Ray other){
-    float distFromPlane = normal.dot(other.start.sub(point));
-    float effectiveness = normal.dot(other.dir);
-    float t = distFromPlane / effectiveness;
+    float distFromPlane = norm.dot(other.start.sub(point));
+    float effectiveness = norm.dot(other.dir);
+    float t = -distFromPlane / effectiveness;
     if(t > 0){
     	return t;
     }
     return -1;
 }
 
-Color Plane::shade(Vector3 place, Room* room){
-    return c;
+Vector3 Plane::normal(Vector3 place){
+    return norm;
 }
 Plane::~Plane() {
 	// TODO Auto-generated destructor stub

@@ -19,6 +19,7 @@ public:
 	Color();
 	Color add(Color other);
 	Color mul(float k);
+	Color filt(Color other);
     std::string repr();
 };
 

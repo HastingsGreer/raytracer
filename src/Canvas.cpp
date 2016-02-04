@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 Canvas::Canvas(int h, int v): h(h), v(v) {
 	pixels = new Color[h * v];
@@ -38,12 +39,12 @@ void Canvas::writeBPM(std::string filename){
 	myfile << "#cool image\n";
     myfile << h << " " << v << "\n";
     myfile << "255\n";
-    for(int i = 0; i < v; i++){
+    for(int i = v-1; i >= 0; i--){
         for(int j = 0; j < h; j++){
     	    Color* c = & pixels[j + h * i];
-    	    myfile << ((int) (c->r * 255)) << " "
-    	    	   << ((int) (c->g * 255)) << " "
-    	           << ((int) (c->b * 256)) << " ";
+    	    myfile << ((int) (std::pow(c->r, 1/2.2) * 255)) << " "
+    	    	   << ((int) (std::pow(c->g, 1/2.2) * 255)) << " "
+    	           << ((int) (std::pow(c->b, 1/2.2) * 256)) << " ";
         }
         myfile << std::endl;
     }

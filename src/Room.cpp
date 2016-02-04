@@ -25,32 +25,33 @@ void Room::render(){
     for(int v = 0; v < camera->v; v++){
     	for(int h = 0; h < camera->h; h++){
     		Ray ray = camera->makeRay(h, v);
-    		float nearest_t = 0;
-    		bool does_intersect = false;
-    		Renderable* nearest = nullptr;
-    		for(Renderable* elem : primitives){
-    		    float t = elem->intersect(ray);
-    		    if(t != -1){
-    		    	if (nearest_t > t || nearest_t == 0){
-    		    		does_intersect = true;
-    		    		nearest_t = t;
-    		    		nearest = elem;
-    		    	}
-    		    }
-    		}
-    		if(does_intersect){
-    		    Color c = nearest->shade(ray.getPoint(nearest_t), this);
+            intersectionResult res = intersect(ray);
+    		if(res.did_intersect){
+    		    Color c = res.nearest->shade(ray.getPoint(res.t), this);
                 canvas.setPixel(h, v, c);
     		} else {
     			canvas.setPixel(h, v, {0, 0, 0});
     		}
-
     	}
-
-
     }
-    //canvas.print();
     canvas.writeBPM("hello.ppm");
+}
+
+intersectionResult Room::intersect(Ray ray) {
+	float nearest_t = 0;
+	bool does_intersect = false;
+	Renderable* nearest = nullptr;
+	for (Renderable* elem : primitives) {
+		float t = elem->intersect(ray);
+		if (t > .0001) {
+			if (nearest_t > t || nearest_t == 0) {
+				does_intersect = true;
+				nearest_t = t;
+				nearest = elem;
+			}
+		}
+	}
+	return intersectionResult {nearest_t, does_intersect, nearest};
 }
 Room::~Room() {
 	for(Renderable* r: primitives){

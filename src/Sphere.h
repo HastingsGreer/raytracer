@@ -18,9 +18,9 @@ public:
 	Vector3 center;
 	float r;
 	Color c;
-	Sphere(Vector3 center, float r, Color c);
+	Sphere(Vector3 center, float r, PhongProfile prof);
 	virtual float intersect(Ray other);
-	virtual Color shade(Vector3 place, Room* room);
+	virtual Vector3 normal(Vector3 place);
 	virtual ~Sphere();
 };
 

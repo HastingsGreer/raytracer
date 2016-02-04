@@ -15,6 +15,13 @@
 #include "Canvas.h"
 
 class Renderable;
+
+struct intersectionResult{
+	float t;
+	bool did_intersect;
+	Renderable* nearest;
+};
+
 class Room {
 public:
     std::vector<Light> lights;
@@ -25,6 +32,9 @@ public:
 	void addLight(Light l);
 	void render();
 	virtual ~Room();
+	intersectionResult intersect(Ray r);
 };
+
+
 
 #endif /* ROOM_H_ */

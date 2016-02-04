@@ -34,6 +34,10 @@ float Vector3::dot(Vector3 other){
 	return this->x * other.x + this->y*other.y + this->z * other.z;
 }
 
+float Vector3::length(){
+	return std::sqrt(this->dot(*this));
+}
+
 Vector3 Vector3::unit(){
 	return this->mul(1/std::sqrt(this->dot(*this)));
 }

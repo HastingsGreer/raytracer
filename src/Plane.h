@@ -16,11 +16,11 @@
 
 class Plane: public Renderable {
 public:
-	Vector3 point, normal;
+	Vector3 point, norm;
 	Color c;
-	Plane(Vector3 point, Vector3 normal, Color c);
+	Plane(Vector3 point, Vector3 normal, PhongProfile prof);
 	virtual float intersect(Ray other);
-	virtual Color shade(Vector3 place, Room* room);
+	virtual Vector3 normal(Vector3 place);
 	virtual ~Plane();
 };
 

@@ -22,6 +22,10 @@ Color Color::add(Color other){
 	return Color(this->r + other.r, this->g + other.g, this->b + other.b);
 }
 
+Color Color::filt(Color other){
+	return Color(this->r * other.r, this->g * other.g, this->b * other.b);
+}
+
 Color Color::mul(float k){
 	return Color(this->r * k, this->g * k, this->b * k);
 }

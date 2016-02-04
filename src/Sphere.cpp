@@ -8,7 +8,8 @@
 #include "Sphere.h"
 
 #include <cmath>
-Sphere::Sphere(Vector3 center, float r, Color c): center(center), r(r), c(c){
+Sphere::Sphere(Vector3 center, float r, PhongProfile prof): Renderable(prof), center(center), r(r){
+
 
 }
 Sphere::~Sphere() {
@@ -32,7 +33,8 @@ float Sphere::intersect(Ray other){
     return -1;
 }
 
-Color Sphere::shade(Vector3 place, Room* room){
-	return c;
+
+Vector3 Sphere::normal(Vector3 place){
+	return (place.sub(center)).mul(1/r);
 }
 
