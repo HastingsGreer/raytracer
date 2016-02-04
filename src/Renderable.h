@@ -20,16 +20,16 @@ struct PhongProfile{
 	Color ambient;
 	Color diffuse;
 	Color spectral;
-	float power;
+	double power;
 };
 
 class Renderable {
 public:
 	PhongProfile prof;
 	Renderable(PhongProfile prof);
-    virtual float intersect(Ray other) = 0;
+    virtual double intersect(Ray other) = 0;
     virtual Vector3 normal(Vector3 place) = 0;
-    Color shade(Vector3 place, Room* room);
+    Color shade(Vector3 place, Room* room, Ray in);
 	virtual ~Renderable();
 };
 

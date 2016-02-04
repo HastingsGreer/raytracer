@@ -12,16 +12,16 @@
 
 class Vector3 {
 public:
-	float x;
-	float y;
-	float z;
-	Vector3(float x, float y, float z);
+	double x;
+	double y;
+	double z;
+	Vector3(double x, double y, double z);
 	Vector3();
 	Vector3 add(Vector3 other);
 	Vector3 sub(Vector3 other);
-	Vector3 mul(float k);
-	float dot(Vector3 other);
-	float length();
+	Vector3 mul(double k);
+	double dot(Vector3 other);
+	double length();
     Vector3 unit();
     std::string repr();
 };

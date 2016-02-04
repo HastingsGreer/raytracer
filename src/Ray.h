@@ -16,7 +16,7 @@ public:
 	Vector3 dir;
 	Ray(Vector3 start, Vector3 dir);
 	std::string repr();
-	Vector3 getPoint(float t);
+	Vector3 getPoint(double t);
 	virtual ~Ray();
 };
 

@@ -8,19 +8,19 @@
 #include "Sphere.h"
 
 #include <cmath>
-Sphere::Sphere(Vector3 center, float r, PhongProfile prof): Renderable(prof), center(center), r(r){
+Sphere::Sphere(Vector3 center, double r, PhongProfile prof): Renderable(prof), center(center), r(r){
 
 
 }
 Sphere::~Sphere() {
 }
 
-float Sphere::intersect(Ray other){
+double Sphere::intersect(Ray other){
     Vector3 transRayStart = other.start.sub(center);
     Vector3 p = transRayStart.mul(1 / r);
     Vector3 d = other.dir.mul(1/r);
-    float dDotP = d.dot(p);
-    float discriminant = dDotP * dDotP - d.dot(d) * (p.dot(p) - 1);
+    double dDotP = d.dot(p);
+    double discriminant = dDotP * dDotP - d.dot(d) * (p.dot(p) - 1);
     if(discriminant < 0){
     	return -1;
     }

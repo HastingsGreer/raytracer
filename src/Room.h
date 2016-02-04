@@ -18,7 +18,7 @@
 class Renderable;
 
 struct intersectionResult{
-	float t;
+	double t;
 	bool did_intersect;
 	Renderable* nearest;
 };

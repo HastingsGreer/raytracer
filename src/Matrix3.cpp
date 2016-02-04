@@ -9,7 +9,7 @@
 #include <cmath>
 #include "Matrix3.h"
 
-Matrix3::Matrix3(float a, float b, float c, float d, float e, float f, float g, float h, float i): a(a), b(b), c(c), d(d), e(e), f(f), g(g), h(h), i(i){
+Matrix3::Matrix3(double a, double b, double c, double d, double e, double f, double g, double h, double i): a(a), b(b), c(c), d(d), e(e), f(f), g(g), h(h), i(i){
 	// TODO Auto-generated constructor stub
 
 }
@@ -44,7 +44,7 @@ Matrix3 Matrix3::mult(Matrix3 other){
 
 }
 
-Matrix3 vertMat(float angle){
+Matrix3 vertMat(double angle){
     return Matrix3(
     		1, 0,               0,
 			0, std::cos(angle),-std::sin(angle),
@@ -52,7 +52,7 @@ Matrix3 vertMat(float angle){
 			);
 }
 
-Matrix3 horizMat(float angle){
+Matrix3 horizMat(double angle){
     return Matrix3(
     		std::cos(angle), 0,-std::sin(angle),
 			0,               1, 0,

@@ -12,13 +12,13 @@
 
 class Color {
 public:
-	float r;
-	float g;
-	float b;
-	Color(float r, float g, float b);
+	double r;
+	double g;
+	double b;
+	Color(double r, double g, double b);
 	Color();
 	Color add(Color other);
-	Color mul(float k);
+	Color mul(double k);
 	Color filt(Color other);
 	bool equals(Color other);
     std::string repr();

@@ -15,7 +15,7 @@ rng_type rng;
 
 const int antialias_rays = 64;
 
-const float antialias_divisor = 1. / antialias_rays;
+const double antialias_divisor = 1. / antialias_rays;
 
 Room::Room(Camera* c, bool do_antialias): camera(c), do_antialias(do_antialias){
 	// TODO Auto-generated constructor stub
@@ -59,7 +59,7 @@ void Room::render(std::string filename){
 Color Room::trace(Ray ray){
 	intersectionResult res = intersect(ray);
 	if(res.did_intersect){
-		return res.nearest->shade(ray.getPoint(res.t), this);
+		return res.nearest->shade(ray.getPoint(res.t), this, ray);
 
 	} else {
 		return Color({0, 0, 0});
@@ -67,11 +67,11 @@ Color Room::trace(Ray ray){
 }
 
 intersectionResult Room::intersect(Ray ray) {
-	float nearest_t = 0;
+	double nearest_t = 0;
 	bool does_intersect = false;
 	Renderable* nearest = nullptr;
 	for (Renderable* elem : primitives) {
-		float t = elem->intersect(ray);
+		double t = elem->intersect(ray);
 		if (t > .001) {
 			if (nearest_t > t || nearest_t == 0) {
 				does_intersect = true;

@@ -24,7 +24,7 @@ void Canvas::print(){
 	for(int i = 0; i < v; i++){
 		for(int j = 0; j < h; j++){
 			Color* c = & pixels[j + h * i];
-			float shade = (c->r + c->g + c->b) / 3;
+			double shade = (c->r + c->g + c->b) / 3;
             std::cout << "@B%8&WM#oahkbdpqwmZO0QJUYXzcvunxrjft+~<>i!l;:,^`_-'."[(int) (shade * 53)]
 			          <<"@B%8&WM#oahkbdpqwmZO0QJUYXzcvunxrjft+~<>i!l;:,^`_-'."[(int) (shade * 53)];
 		}
@@ -40,7 +40,7 @@ void Canvas::writeBPM(std::string filename){
     myfile << h << " " << v << "\n";
     myfile << "255\n";
 
-    float max = 0;
+    double max = 0;
     for(int i = v-1; i >= 0; i--){
             for(int j = 0; j < h; j++){
             	Color* c = & pixels[j + h * i];

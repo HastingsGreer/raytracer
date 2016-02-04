@@ -8,8 +8,8 @@
 #include "Camera.h"
 #include "Vector3.h"
 
-Camera::Camera(Vector3 position, Vector3 u, Vector3 v, Vector3 w, float width,
-		float height, float dist, int hresolution, int vresolution )
+Camera::Camera(Vector3 position, Vector3 u, Vector3 v, Vector3 w, double width,
+		double height, double dist, int hresolution, int vresolution )
         :h(hresolution), v(vresolution){
 
 	this->position = position;

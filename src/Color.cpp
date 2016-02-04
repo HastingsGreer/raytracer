@@ -10,7 +10,7 @@
 
 
 
-Color::Color(float r, float g, float b):
+Color::Color(double r, double g, double b):
     r(r), g(g), b(b){
 }
 
@@ -31,7 +31,7 @@ Color Color::filt(Color other){
 bool Color::equals(Color other){
     return r == other.r && g == other.g && b == other.b;
 }
-Color Color::mul(float k){
+Color Color::mul(double k){
 	return Color(this->r * k, this->g * k, this->b * k);
 }
 

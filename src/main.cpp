@@ -27,8 +27,8 @@
 int main(){
 	Color White {1,1,1};
 	Color Black {0,0,0};
-    float dirhorizangle = 0;
-    float dirvertangle = -.2;
+    double dirhorizangle = 0;
+    double dirvertangle = -.2;
 	Vector3 cameraPosition {1, 1, 0.};
 	Vector3 u {1., 0., 0.};
 	Vector3 v {0., 1., 0.};
@@ -41,7 +41,7 @@ int main(){
 	w = camDirMat.trans(w);
 
 
-	int n = 512;
+	int n = 2012;
 
 
 
@@ -77,29 +77,35 @@ int main(){
                          Black,
                          Color {1, 1, 1}, 32});
     //room.addPrimitive(movePlane);
-    //for(float x = -4; x < 4; x += 2){
+    //for(double x = -4; x < 4; x += 2){
         room.addLight(Light({-4, 4, -3}, White));
 
     //}
     std::cout << "starting" << std::endl;
+
     Vector3 arm = {4, 0, 0};
     Vector3 disp = {0, 0, -7};
-    Matrix3 rot = horizMat(.02);
+    Matrix3 rot = horizMat(2.5 + 3.14);
     n = 0;
-    while(true){
-        arm = rot.trans(arm);
-        left->center = disp.sub(arm);
-        right->center = disp.add(arm);
-
-        std::ostringstream file;
-        file << "spin/" << n;
-        room.render(file.str());
-        n++;
-    }
+    arm = rot.trans(arm);
+    left->center = disp.sub(arm);
+    right->center = disp.add(arm);
+//
+    room.render("help.ppm");
+//    while(true){
+//        arm = rot.trans(arm);
+//        left->center = disp.sub(arm);
+//        right->center = disp.add(arm);
+//
+//        std::ostringstream file;
+//        file << "spin/" << n;
+//        room.render(file.str());
+//        n++;
+//    }
     std::cout << "done" << std::endl;
 
 
-//    for(float x = -4; x < 4; x += .03){
+//    for(double x = -4; x < 4; x += .03){
 //
 //
 //    	file << "video/" << n;

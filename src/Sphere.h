@@ -16,10 +16,10 @@
 class Sphere : public Renderable{
 public:
 	Vector3 center;
-	float r;
+	double r;
 	Color c;
-	Sphere(Vector3 center, float r, PhongProfile prof);
-	virtual float intersect(Ray other);
+	Sphere(Vector3 center, double r, PhongProfile prof);
+	virtual double intersect(Ray other);
 	virtual Vector3 normal(Vector3 place);
 	virtual ~Sphere();
 };

@@ -13,10 +13,10 @@ Plane::Plane(Vector3 point, Vector3 norm, PhongProfile prof): Renderable(prof),
 	// TODO Auto-generated constructor stub
 
 }
-float Plane::intersect(Ray other){
-    float distFromPlane = norm.dot(other.start.sub(point));
-    float effectiveness = norm.dot(other.dir);
-    float t = -distFromPlane / effectiveness;
+double Plane::intersect(Ray other){
+    double distFromPlane = norm.dot(other.start.sub(point));
+    double effectiveness = norm.dot(other.dir);
+    double t = -distFromPlane / effectiveness;
     if(t > 0.001){
     	return t;
     }
