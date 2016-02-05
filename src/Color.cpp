@@ -8,7 +8,14 @@
 #include <cmath>
 #include <sstream>
 
+#include <random>
+#include "Room.h"
 
+
+typedef std::mt19937 rng_type1;
+std::uniform_real_distribution<> udist1(-.5, .5);
+
+rng_type1 rng1(1312);
 
 Color::Color(double r, double g, double b):
     r(r), g(g), b(b){
@@ -35,6 +42,9 @@ Color Color::mul(double k){
 	return Color(this->r * k, this->g * k, this->b * k);
 }
 
+Color Color::randColor(){
+	return Color(udist1(rng1) + .5, udist1(rng1) + .5, udist1(rng1)+ .5);
+}
 
 
 std::string Color::repr(){

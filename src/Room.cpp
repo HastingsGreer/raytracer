@@ -8,12 +8,15 @@
 #include "Room.h"
 #include <random>
 
+
 typedef std::mt19937 rng_type;
 std::uniform_real_distribution<> udist(-.5, .5);
 
 rng_type rng;
 
 const int antialias_rays = 64;
+
+const int recurse_depth = 19;
 
 const double antialias_divisor = 1. / antialias_rays;
 
@@ -40,7 +43,9 @@ void Room::render(std::string filename){
 					p = p.add(trace(
 							Ray(ray.start,
 									ray.dir.add( camera->hinc.mul(udist(rng))).add(camera->vinc.mul(udist(rng)))
-							)).mul(antialias_divisor));
+							      ),
+								  recurse_depth
+					        ).mul(antialias_divisor));
 				}
 				canvas.setPixel(h, v, p);
 			}
@@ -49,17 +54,18 @@ void Room::render(std::string filename){
 	else {
 		for(int v = 0; v < camera->v; v++){
 			for(int h = 0; h < camera->h; h++){
-				canvas.setPixel(h, v, trace(camera->makeRay(h, v)));
+				canvas.setPixel(h, v, trace(camera->makeRay(h, v), recurse_depth));
 			}
 		}
 	}
     canvas.writeBPM(filename);
 }
 
-Color Room::trace(Ray ray){
+Color Room::trace(Ray ray, int recursions){
 	intersectionResult res = intersect(ray);
 	if(res.did_intersect){
-		return res.nearest->shade(ray.getPoint(res.t), this, ray);
+
+		return res.nearest->shade(ray.getPoint(res.t), this, ray, recursions);
 
 	} else {
 		return Color({0, 0, 0});
@@ -80,6 +86,7 @@ intersectionResult Room::intersect(Ray ray) {
 			}
 		}
 	}
+
 	return intersectionResult {nearest_t, does_intersect, nearest};
 }
 Room::~Room() {

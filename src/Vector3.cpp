@@ -34,6 +34,12 @@ double Vector3::dot(Vector3 other){
 	return this->x * other.x + this->y*other.y + this->z * other.z;
 }
 
+Vector3 Vector3::cross(Vector3 other){
+	return Vector3(y * other.z - z * other.y,
+			       z * other.x - x * other.z,
+				   x * other.y - y * other.x);
+}
+
 double Vector3::length(){
 	return std::sqrt(this->dot(*this));
 }

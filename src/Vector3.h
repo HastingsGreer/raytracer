@@ -21,6 +21,7 @@ public:
 	Vector3 sub(Vector3 other);
 	Vector3 mul(double k);
 	double dot(Vector3 other);
+	Vector3 cross(Vector3 other);
 	double length();
     Vector3 unit();
     std::string repr();

@@ -17,12 +17,13 @@ public:
 	double b;
 	Color(double r, double g, double b);
 	Color();
-	Color add(Color other);
-	Color mul(double k);
-	Color filt(Color other);
-	bool equals(Color other);
-    std::string repr();
 
+	Color add(const Color other);
+	Color mul(double k);
+	Color filt(const Color other);
+	bool equals(const Color other);
+    std::string repr();
+    static Color randColor();
     static Color Black;
     static Color White;
 };

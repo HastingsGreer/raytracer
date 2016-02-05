@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include "Renderable.h"
 #include "Canvas.h"
+#include <iostream>
 
 class Renderable;
 
@@ -35,7 +36,7 @@ public:
 	void render(std::string filename);
 	virtual ~Room();
 	intersectionResult intersect(Ray r);
-	Color trace(Ray r);
+	Color trace(Ray r, int recursions);
 };
 
 
