@@ -21,10 +21,20 @@ void Canvas::setPixel(int i, int j, Color c){
 }
 
 void Canvas::print(){
+	double max = 0;
+	    for(int i = v-1; i >= 0; i--){
+	            for(int j = 0; j < h; j++){
+	            	Color* c = & pixels[j + h * i];
+	            	max = c->r > max ? c->r: max;
+	            	max = c->g > max ? c->g: max;
+	            	max = c->b > max ? c->b: max;
+
+	            }
+	    }
 	for(int i = 0; i < v; i++){
 		for(int j = 0; j < h; j++){
 			Color* c = & pixels[j + h * i];
-			double shade = (c->r + c->g + c->b) / 3;
+			double shade = (c->r + c->g + c->b) / (2 * max);
             std::cout << "@B%8&WM#oahkbdpqwmZO0QJUYXzcvunxrjft+~<>i!l;:,^`_-'."[(int) (shade * 53)]
 			          <<"@B%8&WM#oahkbdpqwmZO0QJUYXzcvunxrjft+~<>i!l;:,^`_-'."[(int) (shade * 53)];
 		}
@@ -34,7 +44,7 @@ void Canvas::print(){
 
 void Canvas::writeBPM(std::string filename){
 	std::ofstream myfile;
-    myfile.open (filename);
+    myfile.open (filename.c_str());
 	myfile << "P3\n";
 	myfile << "#cool image\n";
     myfile << h << " " << v << "\n";

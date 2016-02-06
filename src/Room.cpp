@@ -16,7 +16,7 @@ rng_type rng;
 
 const int antialias_rays = 64;
 
-const int recurse_depth = 19;
+const int recurse_depth = 0;
 
 const double antialias_divisor = 1. / antialias_rays;
 
