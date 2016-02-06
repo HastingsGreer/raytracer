@@ -23,6 +23,7 @@
 #include "Matrix3.h"
 #include "Triangle.h"
 #include "gluttest.h"
+#include "triloader.h"
 
 
 
@@ -56,29 +57,34 @@ int main() {
 
 	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), false};
 
-	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
-			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
+
+	loadtriangles(&room, "stl/teapot.plain", {0, 0, 0}, horizMat(0), PhongProfile {
+					Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 });
+
+//	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
+//			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
+//
+//
+//	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
+//			.0 }, Black, 3PhongProfile {
+	//			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }2 });
+//	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
+//			.01, 1 }, Black, 0 });
+//	room.addPrimitive(left);
+//	room.addPrimitive(right);
+//	for(float magic = 0; magic < 100; magic += 2){
+//		 Color c = Color::randColor();
+//	     room.addPrimitive(new Sphere( { 42 * udist2(rng2), 12 * udist2(rng2) + 12, 14 * udist2(rng2)}, 2, PhongProfile { Black, c, c.mul(.2), 32 }));
+//	}
 
 
-	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
-			.0 }, Black, 32 });
-	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
-			.01, 1 }, Black, 0 });
-	room.addPrimitive(left);
-	room.addPrimitive(right);
-	for(float magic = 0; magic < 100; magic += 2){
-		 Color c = Color::randColor();
-	     room.addPrimitive(new Sphere( { 42 * udist2(rng2), 12 * udist2(rng2) + 12, 14 * udist2(rng2)}, 2, PhongProfile { Black, c, c.mul(.2), 32 }));
-	}
 
-
-
-	//for(float magic = 0; magic < 100; magic += 20){
+	for(float magic = 0; magic < 100; magic += 20){
 	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
-	//}
+	}
 	std::cout << "starting" << std::endl;
 
-    room.render("out456.ppm");
+    room.render("out4564553645.ppm");
 
 	std::cout << "done" << std::endl;
 

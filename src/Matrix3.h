@@ -16,6 +16,7 @@ public:
 	Matrix3(double a, double b, double c, double d, double e, double f, double g, double h, double i);
 	Matrix3(Vector3 v1, Vector3 v2, Vector3 v3);
 	Matrix3 mult(Matrix3 other);
+	Matrix3 scale(double k);
 	Vector3 trans(Vector3 v);
 	std::string repr();
 	virtual ~Matrix3();
