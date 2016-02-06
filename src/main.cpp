@@ -39,7 +39,7 @@ int main() {
 	v = camDirMat.trans(v);
 	w = camDirMat.trans(w);
 
-	int n = 400;
+	int n = 500;
 
 	Room room { new Camera(cameraPosition, u, v, w, .2, .2, .1, n, n), false};
     room.addPrimitive(new Triangle({0, 0, -12}, {10, 0, -12}, {10, 10, -12},
