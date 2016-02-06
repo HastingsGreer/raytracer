@@ -12,7 +12,7 @@ const double epsilon = .000001;
 Triangle::Triangle(Vector3 v1, Vector3 v2, Vector3 v3, PhongProfile prof): Renderable(prof), v1(v1), v2(v2), v3(v3) {
 	e1 = v2.sub(v1);
 	e2 = v3.sub(v1);
-	norm = e1.cross(e2).unit();
+	norm = e2.cross(e1).unit();
 	// TODO Auto-generated constructor stub
 
 }

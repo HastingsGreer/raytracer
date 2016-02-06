@@ -29,7 +29,9 @@ void loadtriangles(Room* room, std::string filename, Vector3 displacement, Matri
     	tri_file >> y;
     	tri_file >> z;
     	Vector3 v3 {x, y, z};
-
+        v1 = rotation.trans(v1).add(displacement);
+        v2 = rotation.trans(v2).add(displacement);
+        v3 = rotation.trans(v3).add(displacement);
     	room->addPrimitive(new Triangle(v1, v2, v3, prof));
     }
 }

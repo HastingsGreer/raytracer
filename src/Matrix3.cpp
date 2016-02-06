@@ -35,6 +35,12 @@ Vector3 Matrix3::trans(Vector3 v){
 			);
 }
 
+Matrix3 Matrix3::scale(double k){
+	return Matrix3(k * a, k * b, k * c,
+			       k * d, k * e, k * f,
+				   k * g, k * f, k * g);
+}
+
 Matrix3 Matrix3::mult(Matrix3 other){
     return Matrix3(
     		trans(Vector3 {other.a, other.d, other.g}),

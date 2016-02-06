@@ -40,7 +40,7 @@ int main() {
 	Color Black { 0, 0, 0 };
 	double dirhorizangle = 0;
 	double dirvertangle = -.1;
-	Vector3 cameraPosition { 0, 10, 40. };
+	Vector3 cameraPosition { 0, 1, 0 };
 	Vector3 u { 1., 0., 0. };
 	Vector3 v { 0., 1., 0. };
 	Vector3 w { 0., 0., 1. };
@@ -55,23 +55,22 @@ int main() {
 	int h = 1600;
 	int vert = 900;
 
-	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), false};
+	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), true};
 
 
-	loadtriangles(&room, "stl/teapot.plain", {0, 0, 0}, horizMat(0), PhongProfile {
-					Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 });
+	loadtriangles(&room, "stl/teapot.plain", {0.2, -1, -7}, vertMat(-4 / 2).scale(.09), PhongProfile {
+					{0, .02, 0}, { 0, .8, 0 }, {.2, .2, .2}, 32 });
 
-//	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
-//			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
+	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
+			{.02, .02, .02}, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
 //
 //
-//	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
-//			.0 }, Black, 3PhongProfile {
-	//			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }2 });
-//	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
-//			.01, 1 }, Black, 0 });
-//	room.addPrimitive(left);
-//	room.addPrimitive(right);
+	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
+			.0 }, {.2, .2, .2}, 32});
+	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
+			.01, 1 }, {.2, .2, .2}, 32 });
+	room.addPrimitive(left);
+	room.addPrimitive(right);
 //	for(float magic = 0; magic < 100; magic += 2){
 //		 Color c = Color::randColor();
 //	     room.addPrimitive(new Sphere( { 42 * udist2(rng2), 12 * udist2(rng2) + 12, 14 * udist2(rng2)}, 2, PhongProfile { Black, c, c.mul(.2), 32 }));
@@ -79,10 +78,12 @@ int main() {
 
 
 
-	for(float magic = 0; magic < 100; magic += 20){
-	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
-	}
-	std::cout << "starting" << std::endl;
+	//for(float magic = 0; magic < 100; magic += 20){
+	//room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
+	//}
+
+	room.addLight(Light({-15, 25, 25}, White.mul(700)));
+			std::cout << "starting" << std::endl;
 
     room.render("out4564553645.ppm");
 
