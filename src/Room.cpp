@@ -56,6 +56,9 @@ void Room::render(std::string filename){
 			for(int h = 0; h < camera->h; h++){
 				canvas.setPixel(h, v, trace(camera->makeRay(h, v), recurse_depth));
 			}
+			if(v%10 == 0){
+				std::cout << v << std::endl;
+			}
 		}
 	}
     canvas.writeBPM(filename);
@@ -73,21 +76,17 @@ Color Room::trace(Ray ray, int recursions){
 }
 
 intersectionResult Room::intersect(Ray ray) {
-	double nearest_t = 0;
-	bool does_intersect = false;
-	Renderable* nearest = nullptr;
+	intersectionResult nearest = intersectionResult{-1, false, nullptr};
 	for (Renderable* elem : primitives) {
-		double t = elem->intersect(ray);
-		if (t > .001) {
-			if (nearest_t > t || nearest_t == 0) {
-				does_intersect = true;
-				nearest_t = t;
-				nearest = elem;
+		intersectionResult canidate  = elem->intersect(ray);
+		if (canidate.t > .001) {
+			if (nearest.t > canidate.t || nearest.t == -1) {
+				nearest = canidate;
 			}
 		}
 	}
 
-	return intersectionResult {nearest_t, does_intersect, nearest};
+	return nearest;
 }
 Room::~Room() {
 	for(Renderable* r: primitives){

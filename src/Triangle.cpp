@@ -17,32 +17,32 @@ Triangle::Triangle(Vector3 v1, Vector3 v2, Vector3 v3, PhongProfile prof): Rende
 
 }
 
-double Triangle::intersect(Ray ray){
+intersectionResult Triangle::intersect(Ray ray){
     Vector3 p = ray.dir.cross(e2);
     double det = e1.dot(p);
     if(det > -epsilon && det < epsilon){
-    	return -1;
+    	return intersectionResult{-1, false, nullptr};
     }
     double inv_det = 1./det;
     Vector3 vT = ray.start.sub(v1);
     double u = vT.dot(p) * inv_det;
 
     if(u < 0 || u > 1){
-    	return -1;
+    	return intersectionResult{-1, false, nullptr};
     }
     Vector3 q = vT.cross(e1);
     double v = ray.dir.dot(q) * inv_det;
 
     if(v < 0 || u + v > 1){
-    	return -1;
+    	return intersectionResult{-1, false, nullptr};
     }
 
     double t = e2.dot(q) * inv_det;
 
     if(t > epsilon){
-    	return t;
+    	return intersectionResult{t, true, this};
     }
-    return -1;
+    return intersectionResult{-1, false, nullptr};
 }
 
 Vector3 Triangle::normal(Vector3 place){

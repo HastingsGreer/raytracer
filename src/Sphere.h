@@ -19,7 +19,7 @@ public:
 	double r;
 	Color c;
 	Sphere(Vector3 center, double r, PhongProfile prof);
-	virtual double intersect(Ray other);
+	virtual intersectionResult intersect(Ray other);
 	virtual Vector3 normal(Vector3 place);
 	virtual ~Sphere();
 };

@@ -19,7 +19,7 @@ class Triangle: public Renderable {
 public:
 	Vector3 v1, v2, v3, e1, e2, norm;
 	Triangle(Vector3 v1, Vector3 v2, Vector3 v3, PhongProfile prof);
-	virtual double intersect(Ray other);
+	virtual intersectionResult intersect(Ray other);
 	virtual Vector3 normal(Vector3 place);
 	virtual ~Triangle();
 };

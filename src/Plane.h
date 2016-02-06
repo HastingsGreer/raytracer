@@ -19,7 +19,7 @@ public:
 	Vector3 point, norm;
 	Color c;
 	Plane(Vector3 point, Vector3 normal, PhongProfile prof);
-	virtual double intersect(Ray other);
+	virtual intersectionResult intersect(Ray other);
 	virtual Vector3 normal(Vector3 place);
 	virtual ~Plane();
 };

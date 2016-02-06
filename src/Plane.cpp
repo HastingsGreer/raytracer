@@ -13,14 +13,14 @@ Plane::Plane(Vector3 point, Vector3 norm, PhongProfile prof): Renderable(prof),
 	// TODO Auto-generated constructor stub
 
 }
-double Plane::intersect(Ray other){
+intersectionResult Plane::intersect(Ray other){
     double distFromPlane = norm.dot(other.start.sub(point));
     double effectiveness = norm.dot(other.dir);
     double t = -distFromPlane / effectiveness;
     if(t > 0.001){
-    	return t;
+    	return intersectionResult{t, true, this};
     }
-    return -1;
+    return intersectionResult{-1, false, nullptr};
 }
 
 Vector3 Plane::normal(Vector3 place){

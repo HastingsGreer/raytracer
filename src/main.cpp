@@ -55,7 +55,7 @@ int main() {
 	int h = 1600;
 	int vert = 900;
 
-	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), true};
+	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), false};
 
 
 	loadtriangles(&room, "stl/teapot.plain", {0.2, -1, -7}, vertMat(-4 / 2).scale(.09), PhongProfile {
@@ -81,11 +81,10 @@ int main() {
 	//for(float magic = 0; magic < 100; magic += 20){
 	//room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
 	//}
-
 	room.addLight(Light({-15, 25, 25}, White.mul(700)));
 			std::cout << "starting" << std::endl;
 
-    room.render("out4564553645.ppm");
+    room.render("out434.ppm");
 
 	std::cout << "done" << std::endl;
 
