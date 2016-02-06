@@ -10,6 +10,10 @@
 
 #include <string>
 
+#include <random>
+
+
+
 class Color {
 public:
 	double r;

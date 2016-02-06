@@ -23,6 +23,14 @@
 #include "Matrix3.h"
 #include "Triangle.h"
 #include "gluttest.h"
+
+
+
+typedef std::mt19937 rng_type2;
+std::uniform_real_distribution<> udist2(-.5, .5);
+
+rng_type2 rng2(113);
+
 int main() {
 
 
@@ -30,8 +38,8 @@ int main() {
 	Color White { 1, 1, 1 };
 	Color Black { 0, 0, 0 };
 	double dirhorizangle = 0;
-	double dirvertangle = 0;
-	Vector3 cameraPosition { 0, 0, 0. };
+	double dirvertangle = -.1;
+	Vector3 cameraPosition { 0, 10, 40. };
 	Vector3 u { 1., 0., 0. };
 	Vector3 v { 0., 1., 0. };
 	Vector3 w { 0., 0., 1. };
@@ -43,30 +51,34 @@ int main() {
 	w = camDirMat.trans(w);
 
 
-	int n = 500;
+	int h = 1600;
+	int vert = 900;
 
-	Room room { new Camera(cameraPosition, u, v, w, .2, .2, .1, n, n), false};
+	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), false};
 
 	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
-			{.2, .2, .2}, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
+			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
 
-	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { {.2, 0, 0}, { 1, 0,
+
+	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
 			.0 }, Black, 32 });
-	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { {0, 0, .2}, { .01,
+	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
 			.01, 1 }, Black, 0 });
 	room.addPrimitive(left);
 	room.addPrimitive(right);
-	room.addPrimitive(new Sphere( { 0, 0, -7 }, 2, PhongProfile { {0, .2, 0}, Color {
-			.01, .5, .01 }, Color { .5, .5, .5 }, 32 }));
+	for(float magic = 0; magic < 100; magic += 2){
+		 Color c = Color::randColor();
+	     room.addPrimitive(new Sphere( { 42 * udist2(rng2), 12 * udist2(rng2) + 12, 14 * udist2(rng2)}, 2, PhongProfile { Black, c, c.mul(.2), 32 }));
+	}
 
 
 
-
-	room.addLight(Light( { -4, 4, -3 }, White));
-
+	//for(float magic = 0; magic < 100; magic += 20){
+	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
+	//}
 	std::cout << "starting" << std::endl;
 
-    room.render("out.ppm");
+    room.render("out456.ppm");
 
 	std::cout << "done" << std::endl;
 
