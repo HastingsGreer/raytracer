@@ -55,3 +55,6 @@ Triangle::~Triangle() {
 	// TODO Auto-generated destructor stub
 }
 
+AABB Triangle::getBoundingBox(){
+	return AABB(v1, v2).combine(AABB(v2, v3));
+}

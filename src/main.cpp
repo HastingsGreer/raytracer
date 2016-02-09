@@ -39,8 +39,8 @@ int main() {
 	Color White { 1, 1, 1 };
 	Color Black { 0, 0, 0 };
 	double dirhorizangle = 0;
-	double dirvertangle = -.1;
-	Vector3 cameraPosition { 0, 1, 0 };
+	double dirvertangle = -.4;
+	Vector3 cameraPosition { 0, 3, 0 };
 	Vector3 u { 1., 0., 0. };
 	Vector3 v { 0., 1., 0. };
 	Vector3 w { 0., 0., 1. };
@@ -58,16 +58,16 @@ int main() {
 	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), false};
 
 
-	loadtriangles(&room, "stl/teapot.plain", {0.2, -1, -7}, vertMat(-4 / 2).scale(.09), PhongProfile {
+	loadtriangles(&room, "stl/teapot.plain", {0, -2, -7}, vertMat(-3.141 / 2).scale(.09), PhongProfile {
 					{0, .02, 0}, { 0, .8, 0 }, {.2, .2, .2}, 32 });
 
 	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
-			{.02, .02, .02}, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
+			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
 //
 //
-	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
+	Sphere* left = new Sphere( { -4, -1, -7 }, 1, PhongProfile { Black, { 1, 0,
 			.0 }, {.2, .2, .2}, 32});
-	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
+	Sphere* right = new Sphere( { 4, -1, -7 }, 1, PhongProfile { Black, { .01,
 			.01, 1 }, {.2, .2, .2}, 32 });
 	room.addPrimitive(left);
 	room.addPrimitive(right);
@@ -78,10 +78,11 @@ int main() {
 
 
 
-	//for(float magic = 0; magic < 100; magic += 20){
-	//room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
-	//}
-	room.addLight(Light({-15, 25, 25}, White.mul(700)));
+//	for(float magic = 0; magic < 100; magic += 20){
+//	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
+//	}
+	//room.addLight(Light({-4, 4, -3}, White.mul(40)));
+	room.addLight(Light({4, 4, -3}, Color(40, 40, 40)));
 			std::cout << "starting" << std::endl;
 
     room.render("out434.ppm");

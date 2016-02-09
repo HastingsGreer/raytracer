@@ -14,6 +14,7 @@
 #include "Renderable.h"
 #include "Color.h"
 #include "Room.h"
+#include "AABB.h"
 
 class Triangle: public Renderable {
 public:
@@ -22,6 +23,7 @@ public:
 	virtual intersectionResult intersect(Ray other);
 	virtual Vector3 normal(Vector3 place);
 	virtual ~Triangle();
+	AABB getBoundingBox();
 };
 
 #endif /* TRIANGLE_H_ */

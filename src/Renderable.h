@@ -25,11 +25,12 @@ struct PhongProfile{
 struct intersectionResult;
 
 class Renderable {
+protected:
+	Renderable(PhongProfile prof);
 public:
 	PhongProfile prof;
-	Renderable(PhongProfile prof);
-    virtual intersectionResult intersect(const Ray other) = 0;
-    virtual Vector3 normal(const Vector3 place) = 0;
+    virtual intersectionResult intersect(Ray other) = 0;
+    virtual Vector3 normal(Vector3 place) = 0;
     Color shade(Vector3 place, Room* room, Ray in, int recursions);
 	virtual ~Renderable();
 };
