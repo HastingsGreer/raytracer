@@ -58,9 +58,14 @@ int main() {
 	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), false};
 
 
-	loadtriangles(&room, "stl/teapot.plain", {0, -2, -7}, vertMat(-3.141 / 2).scale(.09), PhongProfile {
-					{0, .02, 0}, { 0, .8, 0 }, {.2, .2, .2}, 32 });
+	loadtriangles(&room, "stl/ripple.plain", {0, 3, -12}, Matrix3{1, 0, 0,
+	                                                                                        0, 1, 0,
+	                                                                                      0, 0, .04}.scale(3), PhongProfile {
+				Black, Black, {1, 1, 1}, 32 });
 
+	loadtriangles(&room, "stl/teapot.plain", {0, -1.2, -7}, horizMat(0).mult(vertMat(-3.14/2).scale(.09)), PhongProfile {
+						{0, .02, 0}, { 0, .8, 0 }, Black, 32 });
+//
 	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
 			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
 //
@@ -78,9 +83,9 @@ int main() {
 
 
 
-//	for(float magic = 0; magic < 100; magic += 20){
-//	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
-//	}
+	for(float magic = 0; magic < 100; magic += 20){
+	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
+	}
 	//room.addLight(Light({-4, 4, -3}, White.mul(40)));
 	room.addLight(Light({4, 4, -3}, Color(40, 40, 40)));
 			std::cout << "starting" << std::endl;
