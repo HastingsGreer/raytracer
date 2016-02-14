@@ -68,8 +68,8 @@ int main(int argc, char * argv[]) {
 	Color White { 1, 1, 1 };
 	Color Black { 0, 0, 0 };
 	double dirhorizangle = 0;
-	double dirvertangle = -.4;
-	Vector3 cameraPosition { 0, 3, 0 };
+	double dirvertangle =  0;
+	Vector3 cameraPosition { 0, 0, 0 };
 	Vector3 u { 1., 0., 0. };
 	Vector3 v { 0., 1., 0. };
 	Vector3 w { 0., 0., 1. };
@@ -97,18 +97,18 @@ int main(int argc, char * argv[]) {
 					.02, 0 }, { 0, .8, 0 }, {.2, .2, .2}, 32 });
     }
 	room.addPrimitive(new Plane( { 0, -2, 0 }, { 0, 1, 0 }, PhongProfile {
-			Black, { .8, .8, .8 }, { .2, .2, .2 }, 10 }));
+			{.2, .2, .2}, {1, 1, 1}, Black, 0 }));
 
 
-	Sphere* left = new Sphere( { -4, 0, -7 }, 1, PhongProfile { Black, { 1, 0,
-			.0 }, {.2, .2, .2}, 32});
-	Sphere* right = new Sphere( { 4, 0, -7 }, 1, PhongProfile { Black, { .01,
-			.01, 1 }, {.2, .2, .2}, 32 });
-	Sphere* center = new Sphere({0, 0, -7}, 2, PhongProfile { { 0,
-					.02, 0 }, { 0, .8, 0 }, {.2, .2, .2}, 32 });
-	room.addPrimitive(left);
-	room.addPrimitive(right);
-	room.addPrimitive(center);
+	Sphere* s1 = new Sphere( { -4, 0, -7 }, 1, PhongProfile {{.2, 0, 0}, { 1, 0,
+			.0 }, {0, 0, 0}, 0});
+	Sphere* s2 = new Sphere( { 0, 0, -7 }, 2, PhongProfile { {0, .2, 0}, {0,
+			.5, 0 }, {.5, .5, .5}, 32 });
+	Sphere* s3 = new Sphere({4, 0, -7}, 1, PhongProfile { { 0,
+					0, .2 }, { 0, 0, 1 }, {0, 0, 0}, 0 });
+	room.addPrimitive(s1);
+	room.addPrimitive(s2);
+	room.addPrimitive(s3);
 //	for(float magic = 0; magic < 100; magic += 2){
 //		 Color c = Color::randColor();
 //	     room.addPrimitive(new Sphere( { 42 * udist2(rng2), 12 * udist2(rng2) + 12, 14 * udist2(rng2)}, 2, PhongProfile { Black, c, c.mul(.2), 32 }));
@@ -119,8 +119,7 @@ int main(int argc, char * argv[]) {
 //	for(float magic = 0; magic < 100; magic += 20){
 //	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
 //	}
-//	room.addLight(Light({-4, 4, -3}, White.mul(40)));
-	room.addLight(Light({4, 4, -3}, Color(1, 1, 1).mul(1 + 39 * do_falloff)));
+	room.addLight(Light({-4, 4, -3}, Color(1, 1, 1).mul(1 + 39 * do_falloff)));
 
 	std::cout << "starting" << std::endl;
 
