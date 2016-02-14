@@ -26,14 +26,13 @@ struct intersectionResult{
 
 class Room {
 public:
-	bool do_antialias;
     std::vector<Light> lights;
     std::vector<Renderable*> primitives;
     Camera* camera;
-	Room(Camera* c, bool do_antialias);
+	Room(Camera* c);
 	void addPrimitive(Renderable* r);
 	void addLight(Light l);
-	void render(std::string filename);
+	void render(std::string filename, bool do_antialias, bool do_shading, bool do_falloff);
 	virtual ~Room();
 	intersectionResult intersect(Ray r);
 	Color trace(Ray r, int recursions);

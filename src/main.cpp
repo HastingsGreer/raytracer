@@ -52,7 +52,7 @@ int main(int argc, char * argv[]) {
 		} else if(arg == "-o"){
 			argi++;
 			if(argi >= argc){
-				std::cout << "must specify output file after -o"; << std::endl;
+				std::cout << "must specify output file after -o" << std::endl;
 				return -1;
 			}
 			out = std::string(argv[argi]);
