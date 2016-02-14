@@ -34,6 +34,7 @@ rng_type2 rng2(113);
 
 int main(int argc, char * argv[]) {
 	bool do_falloff = false;
+	bool do_reflect = false;
 	bool do_teapot = false;
 	bool do_shading = false;
 	bool do_antialias = false;
@@ -47,6 +48,8 @@ int main(int argc, char * argv[]) {
 			do_antialias = true;
 		} else if(arg == "--shade"){
 			do_shading = true;
+		} else if(arg == "--reflect"){
+			do_reflect = true;
 		} else if(arg == "--falloff"){
 			do_falloff = true;
 		} else if(arg == "-o"){
@@ -81,7 +84,7 @@ int main(int argc, char * argv[]) {
 	int h = 512;
 	int vert = 512;
 
-	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert)};
+	Room room { new Camera(cameraPosition, u, v, w, .2, .2 * vert / h, .1, h, vert), do_antialias, do_shading, do_falloff, do_reflect};
 
 //
 //	loadtriangles(&room, "stl/ripple.plain", { 0, 3, -12 }, Matrix3 { 1, 0, 0,
@@ -113,15 +116,15 @@ int main(int argc, char * argv[]) {
 
 
 
-	for(float magic = 0; magic < 100; magic += 20){
-	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
-	}
-	//room.addLight(Light({-4, 4, -3}, White.mul(40)));
-	room.addLight(Light({4, 4, -3}, Color(1, 1, 1)));
+//	for(float magic = 0; magic < 100; magic += 20){
+//	room.addLight(Light( { 42 * udist2(rng2), 12 * udist2(rng2) + 37, 14 * udist2(rng2)}, Color::randColor().mul(140)));
+//	}
+//	room.addLight(Light({-4, 4, -3}, White.mul(40)));
+	room.addLight(Light({4, 4, -3}, Color(1, 1, 1).mul(1 + 39 * do_falloff)));
 
 	std::cout << "starting" << std::endl;
 
-    room.render(out, do_antialias, do_shading, do_falloff);
+    room.render(out);
 
 	std::cout << "done" << std::endl;
 

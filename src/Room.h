@@ -29,10 +29,14 @@ public:
     std::vector<Light> lights;
     std::vector<Renderable*> primitives;
     Camera* camera;
-	Room(Camera* c);
+    bool do_antialias;
+    bool do_shading;
+    bool do_falloff;
+    bool do_reflect;
+	Room(Camera* c, bool do_antialias, bool do_shading, bool do_falloff, bool do_reflect);
 	void addPrimitive(Renderable* r);
 	void addLight(Light l);
-	void render(std::string filename, bool do_antialias, bool do_shading, bool do_falloff);
+	void render(std::string filename);
 	virtual ~Room();
 	intersectionResult intersect(Ray r);
 	Color trace(Ray r, int recursions);

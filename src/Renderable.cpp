@@ -25,7 +25,8 @@ Color Renderable::shade(Vector3 place,  Room* room, Ray in, int recursions){
 		Vector3 unit2light = vec2light.mul(inv_dist2l);
 		intersectionResult res = room->intersect(Ray(place, unit2light));
 
-		double invsqr = inv_dist2l * inv_dist2l;
+		double invsqr = room->do_falloff ? inv_dist2l * inv_dist2l: 1 ;
+
 		if((!res.did_intersect ) || (res.t > dist2light)){
 			double diffuse_coeff = unit2light.dot(norm);
 			c = c.add(l.color.filt(prof.diffuse) .mul((diffuse_coeff > 0 ? diffuse_coeff : 0) * invsqr));
@@ -38,7 +39,7 @@ Color Renderable::shade(Vector3 place,  Room* room, Ray in, int recursions){
 			}
 		}
 	}
-	if(!prof.spectral.equals(Color::Black) && recursions != 0){
+	if(!prof.spectral.equals(Color::Black) && recursions != 0 && room->do_reflect){
 		c =c.add( room->trace(Ray(place, norm.mul(2 * norm.dot(vec2camera)).sub(vec2camera)), recursions - 1).filt(prof.spectral));
 	}
 	return c;

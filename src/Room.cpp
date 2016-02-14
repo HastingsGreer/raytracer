@@ -20,7 +20,7 @@ const int recurse_depth = 4;
 
 const double antialias_divisor = 1. / antialias_rays;
 
-Room::Room(Camera* c): camera(c){
+Room::Room(Camera* c, bool do_antialias, bool do_shading, bool do_falloff, bool do_reflect): camera(c), do_antialias( do_antialias), do_shading(do_shading), do_falloff(do_falloff), do_reflect(do_reflect){
 	// TODO Auto-generated constructor stub
 
 }
@@ -32,7 +32,7 @@ void Room::addPrimitive(Renderable* r){
 	primitives.push_back(r);
 }
 
-void Room::render(std::string filename, bool do_antialias, bool do_shading, bool do_falloff){
+void Room::render(std::string filename){
 	Canvas canvas {camera->h, camera->v};
 	if(do_antialias){
 		for(int v = 0; v < camera->v; v++){
@@ -67,8 +67,11 @@ void Room::render(std::string filename, bool do_antialias, bool do_shading, bool
 Color Room::trace(Ray ray, int recursions){
 	intersectionResult res = intersect(ray);
 	if(res.did_intersect){
-
-		return res.nearest->shade(ray.getPoint(res.t), this, ray, recursions);
+        if(do_shading){
+		    return res.nearest->shade(ray.getPoint(res.t), this, ray, recursions);
+        } else {
+        	return Color({1, 1, 1});
+        }
 
 	} else {
 		return Color({0, 0, 0});
