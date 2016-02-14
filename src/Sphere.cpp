@@ -9,7 +9,7 @@
 
 #include <cmath>
 Sphere::Sphere(Vector3 center, double r, PhongProfile prof): Renderable(prof), center(center), r(r){
-
+    invr = 1/r;
 
 }
 Sphere::~Sphere() {
@@ -17,8 +17,8 @@ Sphere::~Sphere() {
 
 intersectionResult Sphere::intersect(Ray other){
     Vector3 transRayStart = other.start.sub(center);
-    Vector3 p = transRayStart.mul(1 / r);
-    Vector3 d = other.dir.mul(1/r);
+    Vector3 p = transRayStart.mul(invr);
+    Vector3 d = other.dir.mul(invr);
     double dDotP = d.dot(p);
     double discriminant = dDotP * dDotP - d.dot(d) * (p.dot(p) - 1);
     if(discriminant < 0){
@@ -38,6 +38,6 @@ intersectionResult Sphere::intersect(Ray other){
 
 
 Vector3 Sphere::normal(Vector3 place){
-	return (place.sub(center)).mul(1/r);
+	return (place.sub(center)).mul(invr);
 }
 

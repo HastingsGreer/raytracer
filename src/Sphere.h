@@ -17,6 +17,7 @@ class Sphere : public Renderable{
 public:
 	Vector3 center;
 	double r;
+	double invr;
 	Color c;
 	Sphere(Vector3 center, double r, PhongProfile prof);
 	virtual intersectionResult intersect(Ray other);
