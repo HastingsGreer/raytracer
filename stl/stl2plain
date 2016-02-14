@@ -1,0 +1,4 @@
+#!/bin/bash
+./sts2curlylist.m "${1}.stl" | sed s/{/[/g | sed s/}/]/g | sed s/^/*/g > temp
+python convert.py > temp.py
+python maketri.py > "${1}.plain"
