@@ -1,5 +1,6 @@
 #!/bin/bash
 cd Release
+make clean
 make all
 cd ..
 Release/raytracer -f part1.ppm 
