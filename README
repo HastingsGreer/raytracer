@@ -1,0 +1,32 @@
+To compile and run, execute the shell script "assignment1.sh"
+
+part 1 will be written to "part1.ppm"
+part 2 will be written to "part2.ppm"
+part 3 will be written to "part3.ppm"
+
+some shenanigans I've been working on will be written to "teapotproblems.ppm"
+
+
+./src/ contains all the c++ source files:
+    
+    AABB, Vector3, Matrix3, Color, and Ray are datatypes used throughout 
+    to encapsulate coordinate by coodinate calculations
+    
+    Renderable is an abstract class that computes lighting based on a normal, 
+    an intersection position, and a Phong profile. Subclasses are responsible 
+    for implementing intersection and normal vector calculation
+    
+    Triangle, Plane, Sphere, and VolumeHigharchy implement Renderable
+    
+    Canvas contains an aray of pixels and knows how to write itself to a ppm
+    
+    Camera contains information about its position and knows how to turn pixel 
+    coordinates into rays in 3-space
+    
+    Room stores references to the lights and Renderables in the scene, is 
+    responsible for checking intersection queries against its list of 
+    Renderables, and traces each ray yielded by the camera and stores the 
+    results to a Canvas
+    
+    
+./stl/ contains teapot data
