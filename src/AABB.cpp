@@ -75,6 +75,14 @@ double AABB::intersect(Ray ray){
     return -1;
 }
 
+float AABB::surfaceArea(){
+	float dx, dy, dz;
+	dx = maxx - minx;
+	dy = maxy - miny;
+	dz = maxz - minz;
+	return 2 * (dx * dy + dy * dz + dz * dx);
+}
+
 AABB::~AABB() {
 	// TODO Auto-generated destructor stub
 }

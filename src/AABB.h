@@ -23,6 +23,7 @@ public:
 	AABB(double minx, double miny, double minz, double maxx, double maxy, double maxz);
 	double intersect(Ray ray);
     AABB combine(AABB other);
+    float surfaceArea();
 	virtual ~AABB();
 };
 

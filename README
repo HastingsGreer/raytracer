@@ -4,7 +4,6 @@ part 1 will be written to "part1.ppm"
 part 2 will be written to "part2.ppm"
 part 3 will be written to "part3.ppm"
 
-some shenanigans I've been working on will be written to "teapotproblems.ppm"
 
 
 ./src/ contains all the c++ source files:

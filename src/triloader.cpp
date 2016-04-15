@@ -19,9 +19,9 @@ void loadtriangles(Room* room, std::string filename, Vector3 displacement, Matri
     int n;
     tri_file >> n;
     for(int j = 0; j < n; j++){
-//    	Color c = Color::randColor();
-//    	prof.diffuse = c;
-//    	 prof.ambient = c.mul(1 / 9);
+    	//Color c = Color::randColor();
+    	//prof.diffuse = c;
+    	//prof.ambient = c.mul(1 / 9);
     	double x, y, z;
 
     	tri_file >> x;

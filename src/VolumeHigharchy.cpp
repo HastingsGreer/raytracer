@@ -10,13 +10,18 @@
 
 const int X = 0, Y = 1, Z = 2;
 
+float leftSurfaceAreaCache[2000000];
+
 VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof): Renderable(prof) {
+	int numtris = tris->size();
+	std::cout << numtris << std::endl;
 	outer = (*tris)[0]->getBoundingBox();
+	leftSurfaceAreaCache[0] = outer.surfaceArea();
 	for(size_t i = 1; i < tris->size(); i++){
 		outer = (*tris)[i]->getBoundingBox().combine(outer);
 	}
 
-	if(tris -> size() < 5){
+	if(tris -> size() < 2){
 		leftnode = nullptr;
 		rightnode = nullptr;
 		leavesAreTriangles = true;
@@ -48,6 +53,7 @@ VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof
         		splitAxis = Z;
         	}
         }
+
         switch(splitAxis){
         case X :
         	split = (outer.maxx + outer.minx) / 2;
@@ -60,6 +66,24 @@ VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof
         	break;
         default: throw 123;
         }
+        split = 0;
+        for(Triangle* tri : (*tris)){
+            float center;
+            switch(splitAxis){
+                    	case X:
+                    		center = tri->v1.x + tri->v2.x + tri->v3.x;
+                    		break;
+                    	case Y:
+                    		center = tri->v1.y + tri->v2.y + tri->v3.y;
+                    		break;
+                    	case Z:
+                    		center = tri->v1.z + tri->v2.z + tri->v3.z;
+                    		break;
+                    	default: throw 123;
+                    	}
+            split += center / 3;
+        }
+        split /= numtris;
         for(Triangle* tri : (*tris)){
         	bool test;
         	switch(splitAxis){
@@ -80,7 +104,7 @@ VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof
         		rightTriangles->push_back(tri);
         	}
 		}
-		std::cout << leftTriangles->size() << std::endl;
+
 
 		if (leftTriangles->size() == tris->size()
 				|| rightTriangles->size() == tris->size()) {
