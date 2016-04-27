@@ -7,16 +7,47 @@
 
 #include "VolumeHigharchy.h"
 #include <iostream>
+#include <algorithm>
 
 const int X = 0, Y = 1, Z = 2;
 
 float leftSurfaceAreaCache[2000000];
 
-VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof): Renderable(prof) {
+inline float findCenter(Triangle* a, int axis) {
+	float center;
+	switch (axis) {
+	case X:
+		center = a->v1.x + a->v2.x + a->v3.x;
+		break;
+	case Y:
+		center = a->v1.y + a->v2.y + a->v3.y;
+		break;
+	case Z:
+		center = a->v1.z + a->v2.z + a->v3.z;
+		break;
+	default:
+		throw 123;
+	}
+	return center;
+}
+
+bool orderX(Triangle* a, Triangle* b){
+	return findCenter(a, X) > findCenter(b, X);
+}
+
+bool orderY(Triangle* a, Triangle* b){
+	return findCenter(a, Y) > findCenter(b, Y);
+}
+
+bool orderZ(Triangle* a, Triangle* b){
+	return findCenter(a, Z) > findCenter(b, Z);
+}
+
+VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris,
+		PhongProfile prof): Renderable(prof) {
 	int numtris = tris->size();
 	std::cout << numtris << std::endl;
 	outer = (*tris)[0]->getBoundingBox();
-	leftSurfaceAreaCache[0] = outer.surfaceArea();
 	for(size_t i = 1; i < tris->size(); i++){
 		outer = (*tris)[i]->getBoundingBox().combine(outer);
 	}
@@ -56,16 +87,48 @@ VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof
 
         switch(splitAxis){
         case X :
-        	split = (outer.maxx + outer.minx) / 2;
+        	std::sort(tris->begin(), tris->end(), orderX);
         	break;
         case Y :
-        	split = (outer.maxy + outer.miny) / 2;
+        	std::sort(tris->begin(), tris->end(), orderY);
         	break;
         case Z :
-        	split = (outer.maxz + outer.minz) / 2;
+        	std::sort(tris->begin(), tris->end(), orderZ);
         	break;
         default: throw 123;
         }
+        AABB leftouter = (*tris)[0]->getBoundingBox();
+        leftSurfaceAreaCache[0] = leftouter.surfaceArea();
+        for(size_t i = 1; i < tris->size(); i++){
+        	leftouter = (*tris)[i]->getBoundingBox().combine(leftouter);
+        	leftSurfaceAreaCache[i] = leftouter.surfaceArea();
+        }
+
+        AABB rightouter = (*tris)[numtris - 1]->getBoundingBox();
+
+        float minNumtrisXsurfArea = 1 * rightouter.surfaceArea() +
+        		                    (numtris - 1) * leftSurfaceAreaCache[numtris -2];
+
+        int minIndex = numtris - 1;
+        for(int triangleIndex = numtris - 2; triangleIndex >= 1; triangleIndex --){
+            rightouter = (*tris)[triangleIndex]->getBoundingBox().combine(rightouter);
+            float newnumTrisxsurfArea = (numtris - triangleIndex) * rightouter.surfaceArea() +
+            		                    triangleIndex * leftSurfaceAreaCache[triangleIndex - 1];
+            if( newnumTrisxsurfArea < minNumtrisXsurfArea){
+            	minIndex = triangleIndex;
+            	minNumtrisXsurfArea = newnumTrisxsurfArea;
+            }
+        }
+        for(int i = 0; i < numtris; i++){
+        	if(i < minIndex){
+        		leftTriangles->push_back((*(tris))[i]);
+        	} else {
+        		rightTriangles->push_back((*(tris))[i]);
+        	}
+        }
+
+
+/*
         split = 0;
         for(Triangle* tri : (*tris)){
             float center;
@@ -104,7 +167,7 @@ VolumeHigharchy::VolumeHigharchy(std::vector<Triangle*>* tris, PhongProfile prof
         		rightTriangles->push_back(tri);
         	}
 		}
-
+*/
 
 		if (leftTriangles->size() == tris->size()
 				|| rightTriangles->size() == tris->size()) {
