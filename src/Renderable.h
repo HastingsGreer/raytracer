@@ -21,6 +21,7 @@ struct PhongProfile{
 	Color diffuse;
 	Color spectral;
 	double power;
+	double reflectivity;
 };
 struct intersectionResult;
 

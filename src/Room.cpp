@@ -14,13 +14,13 @@ std::uniform_real_distribution<> udist(-.5, .5);
 
 rng_type rng;
 
-const int antialias_rays = 64;
+const int antialias_rays = 150;
 
-const int recurse_depth = 4;
+const int recurse_depth = 2;
 
 const double antialias_divisor = 1. / antialias_rays;
 
-Room::Room(Camera* c, bool do_antialias, bool do_shading, bool do_falloff, bool do_reflect): camera(c), do_antialias( do_antialias), do_shading(do_shading), do_falloff(do_falloff), do_reflect(do_reflect){
+Room::Room(Camera* c, bool do_antialias, bool do_shading, bool do_falloff, bool do_reflect, bool do_interreflection, bool do_shadows): camera(c), do_antialias( do_antialias), do_shading(do_shading), do_falloff(do_falloff), do_reflect(do_reflect), do_interreflection(do_interreflection), do_shadows(do_shadows){
 	// TODO Auto-generated constructor stub
 
 }
@@ -49,6 +49,9 @@ void Room::render(std::string filename){
 				}
 				canvas.setPixel(h, v, p);
 			}
+			if(v%10 == 0){
+							std::cout << v << std::endl;
+						}
 		}
 	}
 	else {
@@ -74,7 +77,7 @@ Color Room::trace(Ray ray, int recursions){
         }
 
 	} else {
-		return Color({0, 0, 0});
+		return Color({0,0,0});
 	}
 }
 

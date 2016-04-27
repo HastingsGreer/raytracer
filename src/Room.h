@@ -33,7 +33,9 @@ public:
     bool do_shading;
     bool do_falloff;
     bool do_reflect;
-	Room(Camera* c, bool do_antialias, bool do_shading, bool do_falloff, bool do_reflect);
+    bool do_interreflection;
+    bool do_shadows;
+	Room(Camera* c, bool do_antialias, bool do_shading, bool do_falloff, bool do_reflect, bool do_interreflection, bool do_shadows);
 	void addPrimitive(Renderable* r);
 	void addLight(Light l);
 	void render(std::string filename);
