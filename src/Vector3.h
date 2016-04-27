@@ -25,6 +25,9 @@ public:
 	double length();
     Vector3 unit();
     std::string repr();
+
+    static Vector3 randUnit(Vector3 center);
+    static Vector3 randSphere();
 };
 
 
