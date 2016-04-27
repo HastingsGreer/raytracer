@@ -8,6 +8,13 @@
 #include <cmath>
 #include <sstream>
 
+#include <random>
+
+typedef std::mt19937 rng_type3;
+std::uniform_real_distribution<> udist3(-1, 1);
+
+rng_type3 rng3(1312);
+
 Vector3::Vector3(double x, double y, double z):
     x(x), y(y), z(z){
 }
@@ -46,6 +53,19 @@ double Vector3::length(){
 
 Vector3 Vector3::unit(){
 	return this->mul(1/std::sqrt(this->dot(*this)));
+}
+
+Vector3 Vector3::randUnit(Vector3 center){
+	Vector3 result;
+	do {
+		result = Vector3(udist3(rng3), udist3(rng3), udist3(rng3));
+	} while (result.dot(center) < 0 || result.dot(result) > 1) ;
+	return result.unit();
+}
+
+Vector3 Vector3::randSphere(){
+	Vector3 result = Vector3(udist3(rng3), udist3(rng3), udist3(rng3));
+	return result;
 }
 
 std::string Vector3::repr(){
