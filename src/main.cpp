@@ -38,6 +38,7 @@ int main(int argc, char * argv[]) {
 	boringReflectiveSpheres();
 	sibenikNoShadow();
 	sibenik();
+	reflectiveSpheres();
 }
 
 int sibenik() {
