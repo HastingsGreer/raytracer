@@ -50,6 +50,21 @@ void Canvas::writeBPM(std::string filename){
     myfile << h << " " << v << "\n";
     myfile << "255\n";
     double max = 1;
+
+
+
+
+    for(int i = v-1; i >= 0; i--){
+            for(int j = 0; j < h; j++){
+            	Color* c = & pixels[j + h * i];
+            	max = c->r > max ? c->r: max;
+            	max = c->g > max ? c->g: max;
+            	max = c->b > max ? c->b: max;
+
+            }
+    }
+
+
     for(int i = v-1; i >= 0; i--){
             for(int j = 0; j < h; j++){
             	Color* c = & pixels[j + h * i];
